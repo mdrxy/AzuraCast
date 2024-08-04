@@ -26,6 +26,16 @@
                 v-model:form="form"
                 :label="typeTitle"
             />
+
+            <!-- v-if might not be necessary -->
+            <button
+                v-if="type"
+                type="button"
+                class="btn btn-secondary"
+                @click="returnToTypeSelection"
+            >
+                {{ $gettext('Back to Type Selection') }}
+            </button>
         </tabs>
     </modal-form>
 </template>
@@ -172,6 +182,13 @@ const clearContents = () => {
 const setType = (newType) => {
     type.value = newType;
     nextTick(resetForm);
+};
+
+const returnToTypeSelection = () => {
+    type.value = null;  // Reset type to return to selection view
+    nextTick(() => {
+        resetForm();  // Optionally reset the form if needed
+    });
 };
 
 defineExpose({
